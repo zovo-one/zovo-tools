@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chrome Extension ID Calculator From Path or Manifest Key | Zovo</title>
+<meta name="description" content="Calculate a Chrome extension ID from a folder path or a manifest key. SHA-256, first 16 bytes, mapped to a-p, as Chromium's id_util.cc does.">
+<link rel="canonical" href="https://zovo.one/free-tools/chrome-extension-id-calculator">
+<link rel="alternate" hreflang="en" href="https://zovo.one/free-tools/chrome-extension-id-calculator"><link rel="alternate" hreflang="x-default" href="https://zovo.one/free-tools/chrome-extension-id-calculator">
+<link href="https://zovo.one/favicon.ico" rel="icon">
+<meta property="og:type" content="website"><meta property="og:title" content="Chrome Extension ID Calculator From Path or Manifest Key | Zovo">
+<meta property="og:description" content="Calculate a Chrome extension ID from a folder path or a manifest key. SHA-256, first 16 bytes, mapped to a-p, as Chromium's id_util.cc does.">
+<meta property="og:site_name" content="Zovo">
+<meta name="twitter:card" content="summary"><meta property="og:url" content="https://zovo.one/free-tools/chrome-extension-id-calculator"><meta name="twitter:url" content="https://zovo.one/free-tools/chrome-extension-id-calculator"><meta name="twitter:title" content="Chrome Extension ID Calculator From Path or Manifest Key | Zovo">
+<meta name="twitter:description" content="Calculate a Chrome extension ID from a folder path or a manifest key. SHA-256, first 16 bytes, mapped to a-p, as Chromium's id_util.cc does.">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;background:#fff;color:#1d1d1f;font-size:17px;line-height:1.58}
+body>nav,body>footer{max-width:900px;margin:0 auto;padding:20px 16px 0}
+body>footer{padding:24px 16px 48px;color:#6e6e73;font-size:.85rem;border-top:1px solid #e5e5ea}
+a{color:#0062c4}
+h1{font-size:2.2rem;line-height:1.15;margin:.4em 0 .3em}
+h2{font-size:1.5rem;margin:2em 0 .6em}
+h3{font-size:1.15rem;margin:0 0 .5em}
+p,li{margin:0 0 1em;overflow-wrap:anywhere}
+code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;background:#f5f5f7;border-radius:6px;padding:1px 5px;font-size:max(14px,.86em);overflow-wrap:anywhere}
+.byline,.small{color:#6e6e73;font-size:.9rem}
+.tool{background:#f5f5f7;border-radius:14px;padding:20px;margin:1.2em 0}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+textarea{display:block;width:100%;max-width:100%;min-height:96px;padding:10px 12px;font-size:15px;line-height:1.45;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#1d1d1f;background:#fff;border:1px solid #8a8a8e;border-radius:10px;resize:vertical}
+button{background:#0062c4;color:#fff;border:1px solid #0062c4;border-radius:980px;padding:11px 22px;font-size:15px;font-weight:600;cursor:pointer;min-height:44px}
+button.secondary{background:#fff;color:#0062c4}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #0062c4;outline-offset:2px}
+.tablewrap{overflow-x:auto;margin:1em 0;-webkit-overflow-scrolling:touch}
+.tablewrap:focus-visible{outline:3px solid #0062c4;outline-offset:2px}
+.tablewrap code{overflow-wrap:anywhere;word-break:break-all}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.out{background:#fff;border:1px solid #d2d2d7;border-radius:12px;padding:16px;margin-top:16px;overflow-wrap:anywhere;word-break:break-word}
+.out p{margin:.5em 0 0}
+.out h3{margin:.4em 0 .5em}
+.verdict{display:inline-block;white-space:nowrap;border-radius:8px;padding:3px 12px;font-weight:700;font-size:.92rem}
+.verdict.yes{background:#dff5e5;color:#11602b}
+.verdict.no{background:#fde3e1;color:#9c1c16}
+.verdict.bad{background:#fdecd0;color:#7a4400}
+.verdict.opt{background:#eef0f3;color:#3a3a3c}
+.err{color:#9c1c16;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid #d2d2d7;padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+.tablewrap table{table-layout:fixed}
+.tablewrap th:last-child{width:300px}
+.tablewrap td:last-child{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:14px;word-break:break-all}
+@media (max-width:640px){.tablewrap th:last-child{width:160px}}
+@media (max-width:420px){.out .idline{font-size:14px;letter-spacing:0}}
+th{white-space:nowrap;background:#f5f5f7}
+.nw{white-space:nowrap}
+details{border:1px solid #d2d2d7;border-radius:12px;padding:12px 16px;margin:.8em 0}
+summary{font-weight:600;cursor:pointer}
+details p{margin:.7em 0 0}
+.idline{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:1.15rem;font-weight:600;letter-spacing:.5px}
+@media (max-width:400px){th,td{padding:6px 5px}th{white-space:normal}.nw{white-space:normal}}
+@media (max-width:600px){body>nav{font-size:14px!important}body>footer{font-size:14px}}
+@media print{details::details-content{content-visibility:visible;display:block}.tool .row{display:none}.tablewrap{overflow:visible}th{white-space:normal}code{overflow-wrap:anywhere}}
+</style>
+</head><body>
+<nav style="display:flex;gap:24px;font-size:0.85rem;"><a class="interactive-element" href="/" style="color:#6e6e73;text-decoration:none;">All Tools</a><a class="interactive-element" href="https://zovo.one" style="color:#6e6e73;text-decoration:none;">zovo.one</a></nav>
+<main style="max-width:900px;margin:0 auto;padding:24px 16px">
+<h1>Chrome extension ID calculator</h1>
+<p class='byline'>By <a href='https://zovo.one/about'>Michael Lip</a>. Updated <span class="nw">2026-11-09</span>.</p>
+
+<p>A Chrome extension ID is 32 letters from <code>a</code> to <code>p</code>, such as <code>ghbmnnjooekpmoecnnnilnnbdlolhkhi</code> for <a href="https://chromewebstore.google.com/detail/google-docs-offline/ghbmnnjooekpmoecnnnilnnbdlolhkhi" rel="nofollow">Google Docs Offline</a>. The Chromium source calculates it from the <code>key</code> in manifest.json when the manifest has one, and otherwise from the absolute path of the unpacked folder. In both cases it takes the SHA-256 digest of the input, keeps the first 16 bytes and writes them with those letters. This page runs that calculation in your browser with Web Crypto, and it sends nothing that you paste to a server.</p>
+<p>The tool takes a path or a key, and it can compare the result with an ID that you expect.</p>
+<ul>
+<li><strong>Manifest key or PEM public key.</strong> The tool applies the key parsing rules of Chromium and shows the ID. The ID depends only on the key, so the same key gives the same ID on every machine. With the public key of a store item, the result should be the ID of the published version.</li>
+<li><strong>Absolute folder path.</strong> The tool hashes the path with the byte rules of each system and shows each step. The bytes are UTF-8 on macOS, UTF-8 by assumption on Linux, and UTF-16LE with an uppercase drive letter on Windows. When manifest.json has no <code>key</code> and you enter the resolved path, this is the ID that <code>chrome://extensions</code> shows for the unpacked folder. Moving the folder changes it.</li>
+<li><strong>Expected ID.</strong> The tool reports whether its result matches the ID that you enter, and it names the rule behind the result. A <code>key</code> comes before the path, so the path matters only when the manifest has no <code>key</code>.</li>
+</ul>
+<p>A store item has its own public key, which the Developer Dashboard shows on the Package tab. An unpacked copy with no <code>key</code> gets its ID from the folder path instead, so its ID differs from the store ID. The <a href="https://developer.chrome.com/docs/extensions/reference/manifest/key" rel="nofollow">Chrome documentation</a> says to copy the public key of the item into the <code>key</code> field to keep one ID during development, and it says that the two IDs should then match.</p>
+
+<h2 id="tool">Calculate the ID</h2>
+<div class="tool">
+<div class="field">
+<label for="cei-path">Extension folder path (absolute path of the unpacked extension)</label>
+<textarea id="cei-path" spellcheck="false" placeholder="/Users/you/my-extension"></textarea>
+</div>
+<div class="field">
+<label for="cei-key">Or the <code>key</code> value from manifest.json, as base64 with or without a PEM wrapper. A private key is refused.</label>
+<textarea id="cei-key" spellcheck="false" placeholder="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD…"></textarea>
+</div>
+<div class="field">
+<label for="cei-expected">Expected ID (optional, the tool compares its result with it)</label>
+<input id="cei-expected" spellcheck="false" autocomplete="off" style="display:block;width:100%;padding:10px 12px;font-size:15px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;border:1px solid #8a8a8e;border-radius:10px" placeholder="32 letters from a to p">
+</div>
+<div class="row"><button type="button" id="cei-run">Calculate</button><button type="button" class="secondary" id="cei-clear">Clear</button></div>
+<div id="cei-out" class="out" role="status" aria-live="polite" hidden></div>
+<noscript><p class="small">The calculator needs JavaScript. The explanation below does not.</p></noscript>
+</div>
+
+<h2 id="how">How Chromium calculates the ID</h2>
+<p><code>ComputeExtensionID</code> in <code>extensions/common/extension.cc</code> chooses the input. If the manifest has a <code>key</code>, it decodes the value with <code>ParsePEMKeyBytes</code> and passes the bytes to <code>GenerateId</code>. The folder path is used only when there is no <code>key</code>, through <code>GenerateIdForPath</code>. The calculation itself has three steps.</p>
+<ol>
+<li><strong>Hash.</strong> <code>GenerateId</code> computes SHA-256 over the input bytes.</li>
+<li><strong>Keep 16 bytes.</strong> The first 16 bytes of the digest (<code>kIdSize = 16</code>) are hex-encoded into 32 characters.</li>
+<li><strong>Change the alphabet.</strong> Each hex digit from <code>0</code> to <code>f</code> becomes a letter from <code>a</code> to <code>p</code>. A comment in the source gives the reason, which is to avoid a completely numeric host, since some software reads that as an IP address.</li>
+</ol>
+<p><code>ParsePEMKeyBytes</code> refuses an empty value and a value above 100 KiB. If the value starts with <code>-----BEGIN</code>, it collapses whitespace, cuts the header up to <code>KEY-----</code> and the footer from <code>-----END</code>, and decodes what is left. Runs of whitespace that contain a line break disappear in that step, a run at the very end disappears too, and other runs become one space. The decoder is strict. The length must be divisible by 4, only the base64 alphabet and final padding are allowed, and any remaining space or line break is an error. A value without a PEM wrapper is decoded as it is, so a line break in it is an error. The tool gives an error for a value that fails these rules, with one exception. It removes spaces and line breaks around a pasted value, and it warns you when Chromium would refuse the value with them.</p>
+<p>For a path, Chromium first makes the folder path absolute with <code>MakeAbsoluteFilePath</code>, which calls <code>realpath</code> on macOS and Linux and <code>_wfullpath</code> on Windows. <code>GenerateIdForPath</code> then calls <code>MaybeNormalizePath</code>. On Windows that function changes a lowercase drive letter to uppercase, so <code>c:\</code> and <code>C:\</code> give the same ID for the same folder. On other systems it returns the path unchanged. The hash covers the path value in its native form, which is UTF-8 on macOS and UTF-16 code units on Windows, hashed in little-endian order as the Windows test vector shows. Linux does not fix an encoding for paths, and this tool assumes UTF-8 there.</p>
+<p>An ID from a path therefore follows the location of the folder. Two machines get the same ID only when the resolved path bytes are the same. To keep one ID everywhere, put a <code>key</code> into manifest.json.</p>
+
+<h2 id="validate">Validate an ID</h2>
+<p>The <code>IdIsValid</code> function accepts exactly 32 characters from <code>a</code> to <code>p</code>, in upper or lower case. If you paste such an ID into the path box, the tool says that it has this form and gives it in lowercase. The check does not show that an extension with this ID exists.</p>
+
+<h2 id="examples">Worked examples</h2>
+<p>Paste an input from this table into the tool to reproduce its ID.</p>
+<div class="tablewrap" role="region" tabindex="0" aria-label="Worked examples"><table>
+<thead><tr><th>Input</th><th>Extension ID</th></tr></thead>
+<tbody>
+<tr><td>Path <code>/Users/you/my-extension</code> (macOS or Linux)</td><td>olbencniebbeagnnpldmdoogijjbfdkm</td></tr>
+<tr><td>Path <code>c:\Users\you\my-extension</code> (Windows)</td><td>ccpdamacfjmiedkhelgfhkffjknaafij</td></tr>
+<tr><td>Key <code>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxVrV4tBX6aS/sAYQ01xWJlblWIk9xfk1vppZ2DvViOgpKkTynHKGws2eCZb/+1GnU9U3l0tKLUtVMDK3babyxKNwPGiALtQ3Xz3NPYhY+AdqlscqhdEVv99ysIszVHFmqQnWNPiL9plYOfAVf7hkhDuvdnuPILL1MalRJBJkS4y0VmV0MUdvKaACcruguItooveojmtcttsk0xCZhQp9HpnWNmNliMC1ozC7jA3v7PUjC5+LaznNBvLmjnkJdA7iEbvNtudoc7N1Gf/9l+TJjyFELmmJPkILTGxLObiNWnCTLhuUk/utqWM1L7t9TPiLJnltNuhSh15QteAUWueh4wIDAQAB</code> (an example 2048-bit RSA public key)</td><td>afnphhnioekcdchdjhgfmcnbemagjabl</td></tr>
+</tbody>
+</table></div>
+<details><summary>One-liner for your own machine (macOS or Linux)</summary>
+<p><code>python3 -c "import hashlib,os;print(''.join(chr(97+int(c,16)) for c in hashlib.sha256(os.path.realpath('/Users/you/my-extension').encode()).hexdigest()[:32]))"</code></p>
+<p>Replace <code>/Users/you/my-extension</code> with your absolute path. Python's <code>os.path.realpath</code> follows symbolic links, as the <code>realpath</code> call in Chromium does, and the command then hashes the UTF-8 bytes. On macOS it keeps the case that you type, while the <code>realpath</code> call in Chromium can return the case stored on the disk, so type the exact case of each folder name. Do not use this command for a Windows path.</p>
+</details>
+
+<h2 id="limits">Limits of this tool</h2>
+<ul>
+<li>It does not read your files or your installed extensions. You paste the path or the key as text.</li>
+<li>It does not open <code>.crx</code> files. In a CRX3 package, <code>crx_verifier.cc</code> requires that the ID in the signed header equals <code>GenerateId</code> of a public key in that header, which is the same calculation as the key form above. To read the ID from a file, use the <a href="/free-tools/crx-viewer">CRX viewer</a>.</li>
+<li>It refuses private keys in the forms that it recognizes, in any of the three fields, and it does not hash them or show their bytes. The forms are PEM private key blocks, PuTTY private key files, and bare base64 of PKCS#1, PKCS#8, encrypted PKCS#8, PKCS#12, SEC1 or OpenSSH private key data. The <code>.pem</code> file that Pack Extension writes is a private key. Paste the public key only.</li>
+<li>It cannot follow a symbolic link, because it cannot see your disk. On macOS and Linux, Chromium resolves the path with <code>realpath</code> before it makes the ID. A path that goes through a symbolic link, such as <code>/tmp</code> on macOS, gives a different ID here unless you paste the resolved path.</li>
+<li>It trims spaces around the path and removes <code>.</code>, <code>..</code> and repeated or trailing separators from the text. On Linux that gives the result of <code>realpath</code> when no symbolic link is involved. On macOS it can differ even without a symbolic link, because <code>realpath</code> there can return each name with the case stored on the disk. Enter a macOS path with the exact case of its folder names. On Windows the tool also changes <code>/</code> to <code>\</code>, but Chromium calls <code>_wfullpath</code> there, and whether these text rules match <code>_wfullpath</code> in every case, such as a trailing backslash or a name that ends in a dot, is not verified.</li>
+<li>How macOS Unicode normalization affects the path bytes that Chromium hashes is not verified. The tool applies no Unicode normalization to the text that you paste.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<p>All Chromium files are at commit <code>79e3aa22eb467575fe0c2db4f9d3dccabf32bddf</code>.</p>
+<ul>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/components/crx_file/id_util.cc" rel="nofollow">components/crx_file/id_util.cc</a> holds <code>GenerateId</code>, <code>GenerateIdForPath</code>, <code>MaybeNormalizePath</code>, <code>IdIsValid</code> and <code>kIdSize</code> (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/components/crx_file/id_util_unittest.cc" rel="nofollow">components/crx_file/id_util_unittest.cc</a> holds the test vectors that the test file of this page runs (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/extensions/common/extension.cc" rel="nofollow">extensions/common/extension.cc</a> holds <code>ComputeExtensionID</code> and <code>ParsePEMKeyBytes</code> (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/base/strings/string_util_impl_helpers.h" rel="nofollow">base/strings/string_util_impl_helpers.h</a> holds the whitespace collapsing that <code>ParsePEMKeyBytes</code> uses (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/base/base64.h" rel="nofollow">base/base64.h</a> states the strict decoding rules (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/extensions/browser/unpacked_installer.cc" rel="nofollow">extensions/browser/unpacked_installer.cc</a> calls <code>MakeAbsoluteFilePath</code> before it loads the folder (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/base/files/file_util_posix.cc" rel="nofollow">base/files/file_util_posix.cc</a> and <a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/base/files/file_util_win.cc" rel="nofollow">base/files/file_util_win.cc</a> hold <code>MakeAbsoluteFilePath</code>, with <code>realpath</code> and <code>_wfullpath</code> (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/base/files/file_path.h" rel="nofollow">base/files/file_path.h</a> states the path encoding of each system (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/components/crx_file/crx_verifier.cc" rel="nofollow">components/crx_file/crx_verifier.cc</a> checks the ID in a CRX header against its public keys (fetched 2026-11-09).</li>
+<li><a href="https://github.com/chromium/chromium/blob/79e3aa22eb467575fe0c2db4f9d3dccabf32bddf/extensions/browser/extension_creator.cc" rel="nofollow">extensions/browser/extension_creator.cc</a> writes the private key file of Pack Extension (fetched 2026-11-09).</li>
+<li><a href="https://chromewebstore.google.com/detail/google-docs-offline/ghbmnnjooekpmoecnnnilnnbdlolhkhi" rel="nofollow">The Chrome Web Store page of Google Docs Offline</a> shows the example ID in its address (fetched 2026-11-09).</li>
+<li><a href="https://developer.chrome.com/docs/extensions/reference/manifest/key" rel="nofollow">The manifest key page of Chrome for Developers</a> gives the steps to copy the public key from the Package tab (fetched 2026-11-09).</li>
+</ul>
+</main>
+<footer> by Michael Lip at <a class="interactive-element" href="https://zovo.one">zovo.one</a></footer>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://zovo.one/free-tools/chrome-extension-id-calculator#webpage","url":"https://zovo.one/free-tools/chrome-extension-id-calculator","name":"Chrome Extension ID Calculator From Path or Manifest Key | Zovo","description":"Calculate a Chrome extension ID from a folder path or a manifest key. SHA-256, first 16 bytes, mapped to a-p, as Chromium's id_util.cc does.","datePublished":"2026-11-09","dateModified":"2026-11-09","isPartOf":{"@type":"WebSite","name":"Zovo","url":"https://zovo.one/"},"breadcrumb":{"@id":"https://zovo.one/free-tools/chrome-extension-id-calculator#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://zovo.one/free-tools/chrome-extension-id-calculator#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://zovo.one/"},{"@type":"ListItem","position":2,"name":"Free tools","item":"https://zovo.one/free-tools"},{"@type":"ListItem","position":3,"name":"Chrome extension ID calculator","item":"https://zovo.one/free-tools/chrome-extension-id-calculator"}]},{"@type":"Article","@id":"https://zovo.one/free-tools/chrome-extension-id-calculator#article","headline":"Chrome extension ID calculator","description":"Derive the ID of an unpacked extension from its folder path, or from the manifest key value, with the key parsing rules of Chromium's extension.cc and the ID rules of its id_util.cc.","author":{"@id":"https://zovo.one/about#person"},"publisher":{"@type":"Organization","name":"Zovo","url":"https://zovo.one/"},"datePublished":"2026-11-09","dateModified":"2026-11-09","mainEntityOfPage":{"@id":"https://zovo.one/free-tools/chrome-extension-id-calculator#webpage"}},{"@type":"Person","@id":"https://zovo.one/about#person","name":"Michael Lip","url":"https://zovo.one/about"}]}</script>
+<script>
+(function(){
+'use strict';
+function $(id){return document.getElementById(id);}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls){e.className=cls;}if(text!==undefined){e.textContent=text;}return e;}
+function clear(node){while(node.firstChild){node.removeChild(node.firstChild);}}
+function badge(kind,text){return el('span','verdict '+kind,text);}
+/* ConvertHexadecimalToIDAlphabet in id_util.cc: 0-f become a-p, anything else becomes a. */
+function hexToAp(hex){return hex.replace(/./g,function(c){var v=parseInt(c,16);return String.fromCharCode(97+(isNaN(v)?0:v));});}
+function idIsValid(id){return /^[a-p]{32}$/i.test(id);}
+function b64ToBytes(b64){
+  var bin=atob(b64),out=new Uint8Array(bin.length),i;
+  for(i=0;i<bin.length;i+=1){out[i]=bin.charCodeAt(i);}
+  return out;
+}
+var PRIVATE_MSG='This looks like a private key, so the tool refused it. It did not hash it or show its bytes. The .pem file that Pack Extension writes is a private key. Paste the public key only.';
+/* Recognizes private key DER: PKCS#1, PKCS#8, PKCS#12, SEC1, encrypted PKCS#8, and the OpenSSH container. */
+function isPrivateDer(b){
+  if(b.length>=14&&String.fromCharCode.apply(null,b.subarray(0,14))==='openssh-key-v1'){return true;}
+  if(b.length<5||b[0]!==0x30){return false;}
+  var i=b[1]<0x80?2:2+(b[1]&0x7f);
+  if(b[i]===2&&b[i+1]===1&&b[i+2]<=3){return true;}
+  if(b[i]!==0x30){return false;}
+  var len=b[i+1],j=i+2,n;
+  if(len>=0x80){n=len&0x7f;len=0;while(n>0){len=len*256+b[j];j+=1;n-=1;}}
+  return b[j+len]===4;
+}
+/* Used only to recognize a private key. Accepts line breaks, missing padding and base64url. */
+function looseDecode(text){
+  var s=text.replace(/\s+/g,'').replace(/=+$/,'').replace(/-/g,'+').replace(/_/g,'/');
+  if(!s||s.length%4===1||!/^[A-Za-z0-9+\/]+$/.test(s)){return null;}
+  while(s.length%4){s+='=';}
+  return b64ToBytes(s);
+}
+function refusePrivate(text){
+  if(/BEGIN[^-\r\n]*PRIVATE KEY|PuTTY-User-Key-File/i.test(text)){throw new Error(PRIVATE_MSG);}
+  var b=looseDecode(text.replace(/-{3,}[^-\r\n]*-{3,}/g,''));
+  if(b&&isPrivateDer(b)){throw new Error(PRIVATE_MSG);}
+}
+/* ParsePEMKeyBytes in extensions/common/extension.cc, with the strict decoder of base/base64.h. */
+function parseKeyInput(input){
+  if(new TextEncoder().encode(input).length>102400){throw new Error('Chromium would refuse this key. It is longer than the 100 KiB limit in ParsePEMKeyBytes.');}
+  var w=input;
+  if(w.indexOf('-----BEGIN')===0){
+    w=w.replace(/[\t\n\v\f\r ]+/g,function(m,at,all){return at+m.length===all.length||/[\r\n]/.test(m)?'':' ';});
+    var hp=w.indexOf('KEY-----',10);
+    if(hp===-1){throw new Error('Chromium would refuse this key. It starts with -----BEGIN but its header has no KEY-----.');}
+    var sp=hp+8,ep=w.lastIndexOf('-----END');
+    if(ep===-1){throw new Error('Chromium would refuse this key. The PEM footer -----END is missing.');}
+    if(sp>=ep){throw new Error('Chromium would refuse this key. The PEM block has no base64 body.');}
+    w=w.slice(sp,ep);
+  }
+  if(w.length%4!==0||!/^[A-Za-z0-9+\/]+={0,2}$/.test(w)){throw new Error('Chromium would refuse this key. The base64 text must use only A-Z, a-z, 0-9, + and /, with at most two = at the end, and its length must be divisible by 4. It must have no spaces or line breaks, apart from the line breaks in a PEM wrapper.');}
+  var bytes=b64ToBytes(w);
+  if(isPrivateDer(bytes)){throw new Error(PRIVATE_MSG);}
+  return bytes;
+}
+/* Text rules only. Chromium resolves the real path with MakeAbsoluteFilePath, and this page cannot see the disk. */
+function normalizePath(raw){
+  if(/[\r\n]/.test(raw)){throw new Error('A folder path must be one line.');}
+  var win=/^[a-z]:[\\\/]/i.test(raw)||/^\\\\/.test(raw);
+  if(!win&&raw.charAt(0)!=='/'){throw new Error('Enter an absolute path that starts with /, with a drive letter such as C:\\ or with \\\\ for a network path. Chromium makes a relative path absolute first, and this page cannot see your working directory or home folder.');}
+  var prefix,segs,t;
+  if(win){
+    t=raw.replace(/\//g,'\\');
+    if(t.charAt(1)===':'){prefix=t.charAt(0).toUpperCase()+':\\';t=t.slice(3);}else{prefix='\\\\';t=t.slice(2);}
+    segs=t.split(/\\+/);
+  }else{
+    prefix='/';segs=raw.split(/\/+/);
+  }
+  var out=[];
+  segs.forEach(function(s){if(!s||s==='.'){return;}if(s==='..'){out.pop();return;}out.push(s);});
+  return {path:prefix+out.join(win?'\\':'/'),win:win};
+}
+/* GenerateIdForPath hashes the native path value, UTF-16LE on Windows and UTF-8 elsewhere here. */
+function pathToBytes(p,windows){
+  if(windows){
+    var out=new Uint8Array(p.length*2),i,c;
+    for(i=0;i<p.length;i+=1){c=p.charCodeAt(i);out[i*2]=c&0xff;out[i*2+1]=c>>8;}
+    return out;
+  }
+  return new TextEncoder().encode(p);
+}
+function sha256Hex(bytes){
+  return crypto.subtle.digest('SHA-256',bytes).then(function(dig){
+    var arr=new Uint8Array(dig),hex='',i;
+    for(i=0;i<arr.length;i+=1){hex+=arr[i].toString(16).padStart(2,'0');}
+    return hex;
+  });
+}
+function idFromHexFull(hex){return hexToAp(hex.slice(0,32));}
+function step(out,n,text){out.appendChild(el('p','small','Step '+n+'. '+text));}
+var HEX_SHOWN=512;
+function toHex(b){var h='',i;for(i=0;i<b.length&&i<HEX_SHOWN;i+=1){h+=b[i].toString(16).padStart(2,'0');}return h;}
+function expectedCheck(out,id,rule){
+  var exp=$('cei-expected').value.trim().toLowerCase();
+  if(!exp){return;}
+  var head=el('p');out.appendChild(head);
+  if(!idIsValid(exp)){head.appendChild(badge('bad','Not a valid ID'));out.appendChild(el('p','err','The expected ID must be 32 letters from a to p.'));return;}
+  if(exp===id){
+    head.appendChild(badge('yes','Match'));
+    out.appendChild(el('p','','This result matches the expected ID.'+(rule==='key'?' It comes from the key rule, because you entered a key.':rule==='path'?' It comes from the path rule. If manifest.json has a key, Chromium uses the key instead.':'')));
+    return;
+  }
+  head.appendChild(badge('no','No match'));
+  var why=rule==='key'?' This result comes from the key rule, and the folder path does not change it.':rule==='path'?' This result comes from the path rule. If manifest.json has a key, Chromium uses the key instead of the path.':'';
+  var store=rule?' A Web Store ID and an unpacked ID differ when the unpacked copy has no key in manifest.json, because the path then makes the ID.':'';
+  out.appendChild(el('p','err','The expected ID is '+exp+' and this input gives '+id+'.'+why+store));
+}
+function showSteps(out,token,bytes,inputText,heading,note,rule){
+  step(out,1,inputText+'. It has '+bytes.length+' bytes, in hex '+toHex(bytes)+(bytes.length>HEX_SHOWN?' (first '+HEX_SHOWN+' bytes shown).':'.'));
+  sha256Hex(bytes).then(function(hex){
+    if(token!==runToken){return;}
+    step(out,2,'The SHA-256 digest of those bytes is '+hex+'.');
+    step(out,3,'The first 16 bytes (kIdSize) are '+hex.slice(0,32)+'.');
+    var id=idFromHexFull(hex);
+    step(out,4,'Changing hex digits 0 to f into letters a to p gives '+id+'.');
+    out.appendChild(el('h3','',heading));
+    out.appendChild(el('p','idline',id));
+    out.appendChild(el('p','small',note));
+    expectedCheck(out,id,rule);
+  }).catch(function(){
+    if(token===runToken){out.appendChild(el('p','err','The browser could not calculate the SHA-256 digest.'));}
+  });
+}
+var runToken=0;
+function resetOut(){runToken+=1;clear($('cei-out'));$('cei-out').hidden=true;}
+function run(){
+  var out=$('cei-out'),rawPath=$('cei-path').value,rawK=$('cei-key').value,path=rawPath.trim(),k=rawK.trim();
+  resetOut();
+  var token=runToken;
+  out.hidden=false;
+  function fail(msg){out.appendChild(el('p','err',msg));}
+  try{refusePrivate(rawPath);refusePrivate(rawK);refusePrivate($('cei-expected').value);}catch(e){fail(e.message);return;}
+  if(!path&&!k){fail('Paste a folder path or a manifest key first.');return;}
+  if(typeof crypto==='undefined'||!crypto.subtle){fail('This browser does not offer Web Crypto on this page, so the tool cannot hash the input.');return;}
+  var bytes,n,trimmed=false;
+  if(k){
+    try{bytes=parseKeyInput(rawK);}
+    catch(e1){
+      if(k===rawK){fail(e1.message);return;}
+      try{bytes=parseKeyInput(k);trimmed=true;}catch(e2){fail(e2.message);return;}
+    }
+    showSteps(out,token,bytes,'The input is the bytes decoded from the base64 key, with any PEM wrapper removed','Extension ID from the manifest key',(trimmed?'The tool removed the spaces or line breaks around the pasted value. Chromium refuses the value in manifest.json if it keeps them. ':'')+(path?'You entered a key and a path. Chromium uses the key when manifest.json has one (ComputeExtensionID), so this ID comes from the key. ':'')+'This ID depends only on the key, so it does not change when the folder moves.','key');
+    return;
+  }
+  if(idIsValid(path)){
+    var head=el('p');head.appendChild(badge('yes','Valid ID form'));out.appendChild(head);
+    out.appendChild(el('p','','This text has the form that IdIsValid accepts. In lowercase it is '+path.toLowerCase()+'.'));
+    expectedCheck(out,path.toLowerCase(),'');
+    return;
+  }
+  try{n=normalizePath(path);}catch(e){fail(e.message);return;}
+  bytes=pathToBytes(n.path,n.win);
+  var drive=n.win&&n.path.charAt(1)===':';
+  showSteps(out,token,bytes,'The input is the path '+n.path+', as '+(n.win?'UTF-16LE code units'+(drive?' with the drive letter in uppercase':'')+' (Windows)':'UTF-8 bytes'),'Extension ID from the path','When manifest.json has no key, Chromium calculates the ID from the resolved folder path, so moving the folder changes it. When manifest.json has a key, Chromium uses the key instead.'+(n.win?' On Windows, this page applies text rules and cannot run _wfullpath.':' Chromium resolves symbolic links first, and this page cannot, so enter the resolved path.'),'path');
+}
+$('cei-run').addEventListener('click',run);
+$('cei-clear').addEventListener('click',function(){$('cei-path').value='';$('cei-key').value='';$('cei-expected').value='';resetOut();});
+['cei-path','cei-key','cei-expected'].forEach(function(id){$(id).addEventListener('input',resetOut);});
+window.addEventListener('pageshow',resetOut);
+})();
+</script>
+</body></html>
