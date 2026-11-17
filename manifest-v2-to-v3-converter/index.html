@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manifest V2 to V3 Converter for Chrome Extensions | Zovo</title>
+<meta name="description" content="Paste a Chrome extension manifest.json, convert Manifest V2 to Manifest V3 in your browser, and see a change log with the Google rule behind each change.">
+<link rel="canonical" href="https://zovo.one/free-tools/manifest-v2-to-v3-converter">
+<link rel="alternate" hreflang="en" href="https://zovo.one/free-tools/manifest-v2-to-v3-converter"><link rel="alternate" hreflang="x-default" href="https://zovo.one/free-tools/manifest-v2-to-v3-converter">
+<link href="https://zovo.one/favicon.ico" rel="icon">
+<meta property="og:type" content="website"><meta property="og:title" content="Manifest V2 to V3 Converter for Chrome Extensions | Zovo">
+<meta property="og:description" content="Paste a Chrome extension manifest.json, convert Manifest V2 to Manifest V3 in your browser, and see a change log with the Google rule behind each change.">
+<meta property="og:site_name" content="Zovo">
+<meta name="twitter:card" content="summary"><meta property="og:url" content="https://zovo.one/free-tools/manifest-v2-to-v3-converter"><meta name="twitter:url" content="https://zovo.one/free-tools/manifest-v2-to-v3-converter"><meta name="twitter:title" content="Manifest V2 to V3 Converter for Chrome Extensions | Zovo">
+<meta name="twitter:description" content="Paste a Chrome extension manifest.json, convert Manifest V2 to Manifest V3 in your browser, and see a change log with the Google rule behind each change.">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;background:#fff;color:#1d1d1f;font-size:17px;line-height:1.58}
+body>nav,body>footer{max-width:900px;margin:0 auto;padding:20px 16px 0}
+body>footer{padding:24px 16px 48px;color:#6e6e73;font-size:.85rem;border-top:1px solid #e5e5ea}
+a{color:#0062c4}
+h1{font-size:2.2rem;line-height:1.15;margin:.4em 0 .3em}
+h2{font-size:1.5rem;margin:2em 0 .6em}
+p,li{margin:0 0 1em;overflow-wrap:anywhere}
+code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;background:#f5f5f7;border-radius:6px;padding:1px 5px;font-size:max(14px,.86em);overflow-wrap:anywhere}
+.byline,.small{color:#6e6e73;font-size:.9rem}
+.tool{background:#f5f5f7;border-radius:14px;padding:20px;margin:1.2em 0}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+textarea{display:block;width:100%;max-width:100%;min-height:220px;padding:10px 12px;font-size:15px;line-height:1.45;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#1d1d1f;background:#fff;border:1px solid #8a8a8e;border-radius:10px;resize:vertical}
+button{background:#0062c4;color:#fff;border:1px solid #0062c4;border-radius:980px;padding:11px 22px;font-size:15px;font-weight:600;cursor:pointer;min-height:44px}
+button.secondary{background:#fff;color:#0062c4}
+a:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid #0062c4;outline-offset:2px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.out{background:#fff;border:1px solid #d2d2d7;border-radius:12px;padding:16px;margin-top:16px;overflow-wrap:anywhere;word-break:break-word}
+.out p{margin:.5em 0 0}
+.out p:first-child{margin-top:0}
+.err{color:#9c1c16;font-weight:600}
+.warnline{color:#7a4400}
+.okline{color:#11602b}
+pre{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word;margin:0}
+.out pre{margin-top:.5em}
+.log{list-style:none;padding:0;margin:0}
+.log li{padding:6px 0;margin:0;border-bottom:1px solid #e5e5ea}
+.log li:last-child{border-bottom:0}
+.hidden{display:none}
+@media (max-width:600px){body>nav{font-size:14px!important}body>footer{font-size:14px}h1{font-size:1.8rem}}
+@media print{.tool .row{display:none}textarea{min-height:0}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://zovo.one/free-tools/manifest-v2-to-v3-converter#webpage","url":"https://zovo.one/free-tools/manifest-v2-to-v3-converter","name":"Manifest V2 to V3 Converter for Chrome Extensions | Zovo","description":"Paste a Chrome extension manifest.json, convert Manifest V2 to Manifest V3 in your browser, and see a change log with the Google rule behind each change.","datePublished":"2026-11-17","dateModified":"2026-11-17","isPartOf":{"@type":"WebSite","name":"Zovo","url":"https://zovo.one/"},"breadcrumb":{"@id":"https://zovo.one/free-tools/manifest-v2-to-v3-converter#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://zovo.one/free-tools/manifest-v2-to-v3-converter#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://zovo.one/"},{"@type":"ListItem","position":2,"name":"Free tools","item":"https://zovo.one/free-tools"},{"@type":"ListItem","position":3,"name":"Manifest V2 to V3 converter","item":"https://zovo.one/free-tools/manifest-v2-to-v3-converter"}]},{"@type":"Article","@id":"https://zovo.one/free-tools/manifest-v2-to-v3-converter#article","headline":"Manifest V2 to V3 converter for Chrome extensions","description":"Convert a Chrome extension manifest.json from Manifest V2 to Manifest V3 in the browser and see the Google rule behind each change.","author":{"@id":"https://zovo.one/about#person"},"publisher":{"@type":"Organization","name":"Zovo","url":"https://zovo.one/"},"datePublished":"2026-11-17","dateModified":"2026-11-17","mainEntityOfPage":{"@id":"https://zovo.one/free-tools/manifest-v2-to-v3-converter#webpage"}},{"@type":"Person","@id":"https://zovo.one/about#person","name":"Michael Lip","url":"https://zovo.one/about"}]}</script>
+</head>
+<body>
+<nav style="display:flex;gap:24px;font-size:0.85rem;"><a class="interactive-element" href="/" style="color:#6e6e73;text-decoration:none;">All Tools</a><a class="interactive-element" href="https://zovo.one" style="color:#6e6e73;text-decoration:none;">zovo.one</a></nav>
+<main style="max-width:900px;margin:0 auto;padding:24px 16px">
+<h1>Manifest V2 to V3 converter for Chrome extensions</h1>
+<p class="byline">By <a href="https://zovo.one/about">Michael Lip</a>. Updated <span>2026-11-17</span>.</p>
+<p>Paste a Manifest V2 <code>manifest.json</code> and get a Manifest V3 manifest with a change log. Each line of the log links to the developer.chrome.com page with the rule behind the change. The conversion runs entirely in your browser. Your manifest is not uploaded.</p>
+
+<h2>Paste your manifest.json</h2>
+<div class="tool">
+<div class="field">
+<label for="input">Manifest JSON, Manifest V2 or V3</label>
+<textarea id="input" spellcheck="false" placeholder='{
+  "manifest_version": 2,
+  "name": "Example",
+  "version": "1.0",
+  "permissions": ["storage", "https://example.com/*"],
+  "browser_action": { "default_popup": "popup.html" }
+}'></textarea>
+</div>
+<div class="row">
+<button id="convert" type="button">Convert to Manifest V3</button>
+<button id="clear" type="button" class="secondary">Clear</button>
+</div>
+
+<div id="errorbox" class="out hidden" role="alert">
+  <p id="errortext" class="err"></p>
+</div>
+</div>
+
+<section id="result" class="hidden" aria-live="polite">
+  <h2>Converted Manifest V3</h2>
+  <p id="notice" class="hidden"></p>
+  <div class="out"><pre id="output"></pre></div>
+
+  <h2>Change log</h2>
+  <p class="small">One line per change. Each line links to the developer.chrome.com page with the rule behind the change.</p>
+  <div class="out"><ul class="log" id="changelog"></ul></div>
+
+  <h2>What this converter cannot change</h2>
+  <div class="out"><ul class="log" id="manual"></ul></div>
+
+  <h2>Content security policy check</h2>
+  <div class="out" id="cspbox"></div>
+
+  <h2>Web accessible resources</h2>
+  <div class="out" id="warbox"></div>
+</section>
+
+<h2>What the converter does</h2>
+<ul>
+<li>Changes <code>manifest_version</code> from 2 to 3, as <a href="https://developer.chrome.com/docs/extensions/develop/migrate/manifest" rel="noopener">the migration guide requires</a>.</li>
+<li>Moves host patterns out of <code>permissions</code> and <code>optional_permissions</code> into <code>host_permissions</code> and <code>optional_host_permissions</code>, because <a href="https://developer.chrome.com/docs/extensions/develop/migrate/manifest" rel="noopener">host permissions are a separate field in Manifest V3</a>.</li>
+<li>Replaces <code>browser_action</code> and <code>page_action</code> with <code>action</code>, as <a href="https://developer.chrome.com/docs/extensions/develop/migrate/api-calls" rel="noopener">the API migration page requires</a>. When both have the same key, the converter keeps the <code>browser_action</code> value and names the dropped key in the change log.</li>
+<li>Turns <code>background.scripts</code> into <code>background.service_worker</code>, because <a href="https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers" rel="noopener">the service worker field takes a string, not an array</a>, and removes <code>background.persistent</code>, as <a href="https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers" rel="noopener">the service worker migration page requires</a>.</li>
+<li>Converts each <code>web_accessible_resources</code> string to an object with <code>resources</code> and <code>matches</code>, because <a href="https://developer.chrome.com/docs/extensions/reference/manifest/web-accessible-resources" rel="noopener">each element must include a resources element and either a matches or extension_ids element</a>.</li>
+<li>Converts a string <code>content_security_policy</code> to an object with <code>extension_pages</code>, because <a href="https://developer.chrome.com/docs/extensions/develop/migrate/improve-security" rel="noopener">in Manifest V3 it is a dictionary that supports two properties, extension_pages and sandbox</a>.</li>
+<li>Renames <code>_execute_browser_action</code> and <code>_execute_page_action</code> in <code>commands</code> to <code>_execute_action</code>, as <a href="https://developer.chrome.com/docs/extensions/reference/api/commands" rel="noopener">the commands reference defines these reserved names</a>. A manifest can hold one <code>_execute_action</code> key, so when both old names are present the converter keeps the <code>_execute_browser_action</code> entry and logs the other one.</li>
+<li>Replaces a <code>webRequestBlocking</code> permission with <code>declarativeNetRequest</code>, as <a href="https://developer.chrome.com/docs/extensions/develop/migrate/blocking-web-requests" rel="noopener">the blocking web requests migration page requires</a>. An optional <code>webRequestBlocking</code> becomes a <code>declarativeNetRequest</code> entry in <code>permissions</code>, because <a href="https://developer.chrome.com/docs/extensions/reference/api/permissions" rel="noopener">declarativeNetRequest is one of the permissions that can not be specified as optional</a>. You must still rewrite the blocking listeners as rules.</li>
+</ul>
+
+<h2>Why you need to convert</h2>
+<p>Manifest V2 no longer runs in current Chrome. Google states that <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline" rel="noopener">Chrome 138 is the final version of Chrome to support Manifest V2 extensions (when paired with the ExtensionManifestV2Availability key)</a> and that <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline" rel="noopener">all remaining Manifest V2 extensions have been removed from the Chrome Web Store</a>. In January 2022 the Chrome Web Store <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline" rel="noopener">stopped accepting new Manifest V2 extensions with visibility set to "Public" or "Unlisted"</a>.</p>
+
+<h2>Limits of this tool</h2>
+<ul>
+<li>This tool converts <code>manifest.json</code> only. It does not change your JavaScript, HTML or CSS. A manifest conversion is not a complete migration.</li>
+<li>The converter cannot split more than one background script into a service worker, cannot migrate <code>background.page</code>, cannot rewrite <code>webRequestBlocking</code> blocking rules, and cannot rewrite code calls such as <code>tabs.executeScript</code>. The list "What this converter cannot change" names each of these. The notes about code calls show for every input, because the converter does not read code files.</li>
+<li>For each <code>web_accessible_resources</code> string the converter writes <code>"matches": ["*://*/*"]</code>. That pattern is not the same as <code>&lt;all_urls&gt;</code>, because <a href="https://developer.chrome.com/docs/extensions/develop/concepts/match-patterns" rel="noopener">the wildcard scheme matches only http or https</a>. Narrow the <code>matches</code> value to the sites that actually need your resources.</li>
+<li>The tool runs in your browser. Your manifest is never sent to a server. The conversion code is part of this page.</li>
+</ul>
+
+<h2>Primary sources</h2>
+<p>Each rule on this page comes from these developer.chrome.com pages, all fetched 2026-11-17.</p>
+<ul>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/manifest" rel="noopener">Update the manifest</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers" rel="noopener">Migrate to a service worker</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/api-calls" rel="noopener">Update your code</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/improve-security" rel="noopener">Improve extension security</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/reference/manifest/content-security-policy" rel="noopener">Manifest content security policy</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/reference/manifest/web-accessible-resources" rel="noopener">Manifest web accessible resources</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/concepts/match-patterns" rel="noopener">Match patterns</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/reference/api/commands" rel="noopener">Commands API</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/reference/api/permissions" rel="noopener">Permissions API</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/blocking-web-requests" rel="noopener">Replace blocking web request listeners</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline" rel="noopener">Manifest V2 support timeline</a></li>
+</ul>
+
+<h2>Related tools</h2>
+<p>Inspect an installed package with the <a href="/free-tools/crx-viewer">CRX viewer</a> or check keyboard shortcuts with the <a href="/free-tools/chrome-extension-keyboard-shortcut-checker">keyboard shortcut checker</a>.</p>
+</main>
+<footer> by Michael Lip at <a class="interactive-element" href="https://zovo.one">zovo.one</a></footer>
+<script>
+"use strict";
+function convertManifest(src) {
+  var result = { output: null, error: null, notice: null, changes: [], manual: [], csp: null, war: null };
+  var text = String(src == null ? "" : src).replace(/^﻿/, "");
+  if (text.trim().length === 0) {
+    result.error = "Paste a manifest.json first. The input is empty.";
+    return result;
+  }
+  var m;
+  try {
+    m = JSON.parse(text);
+  } catch (e) {
+    var where = "";
+    var msg = String(e && e.message || "");
+    var at = -1;
+    var pm = /position (\d+)/.exec(msg);
+    var lc = /line (\d+) column (\d+)/.exec(msg);
+    if (pm) {
+      at = Number(pm[1]);
+    } else if (lc) {
+      var lines = text.split("\n");
+      at = 0;
+      for (var i = 0; i < Number(lc[1]) - 1 && i < lines.length; i++) at += lines[i].length + 1;
+      at += Number(lc[2]) - 1;
+    }
+    if (at >= 0 && at <= text.length) {
+      var before = text.slice(0, at).split("\n");
+      var near = text.slice(Math.max(0, at - 20), at + 20).replace(/\s+/g, " ").trim();
+      where = " at line " + before.length + ", column " + (before[before.length - 1].length + 1) + (near ? ', near "' + near + '"' : "");
+    }
+    result.error = "Not valid JSON" + where + ". Fix the JSON and paste it again.";
+    return result;
+  }
+  if (Array.isArray(m)) {
+    result.error = "The input is a JSON array. A manifest.json must be a single JSON object. Paste the object, not an array.";
+    return result;
+  }
+  if (typeof m !== "object" || m === null) {
+    result.error = "The input is not a JSON object. A manifest.json must be an object.";
+    return result;
+  }
+  var out = JSON.parse(JSON.stringify(m));
+  var changes = [];
+  function log(msg, url) { changes.push({ text: msg, url: url }); }
+  function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
+  var MIGRATE = "https://developer.chrome.com/docs/extensions/develop/migrate/manifest";
+  var API = "https://developer.chrome.com/docs/extensions/develop/migrate/api-calls";
+  var SW = "https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers";
+  var WAR = "https://developer.chrome.com/docs/extensions/reference/manifest/web-accessible-resources";
+  var CSP = "https://developer.chrome.com/docs/extensions/develop/migrate/improve-security";
+  var CMD = "https://developer.chrome.com/docs/extensions/reference/api/commands";
+  var BWR = "https://developer.chrome.com/docs/extensions/develop/migrate/blocking-web-requests";
+  var PERMS = "https://developer.chrome.com/docs/extensions/reference/api/permissions";
+
+  if (m.manifest_version === 3) {
+    result.notice = "The input is already Manifest V3, so the converter did not change manifest_version. The change log lists each other field that the converter changed.";
+  } else if (m.manifest_version === 2) {
+    out.manifest_version = 3;
+    log('Changed "manifest_version" from 2 to 3.', MIGRATE);
+  } else {
+    result.error = 'The manifest has no "manifest_version" field, or it is not 2 or 3. Add "manifest_version": 2 and paste it again.';
+    return result;
+  }
+
+  var isHost = function (s) { return typeof s === "string" && (s === "<all_urls>" || /(\*|https?|ws|wss|ftp|file|urn):/.test(s)); };
+  ["permissions", "optional_permissions"].forEach(function (field) {
+    var target = field === "permissions" ? "host_permissions" : "optional_host_permissions";
+    if (!Array.isArray(m[field])) return;
+    var hosts = m[field].filter(isHost);
+    var rest = m[field].filter(function (s) { return !isHost(s); });
+    if (hosts.length === 0) return;
+    if (!Array.isArray(out[target])) out[target] = [];
+    hosts.forEach(function (h) { if (out[target].indexOf(h) === -1) out[target].push(h); });
+    out[field] = rest;
+    if (rest.length === 0) delete out[field];
+    log('Moved ' + hosts.length + ' host pattern' + (hosts.length > 1 ? "s" : "") + ' from "' + field + '" to "' + target + '".', MIGRATE);
+  });
+  if (Array.isArray(out.permissions) && out.permissions.length === 0) delete out.permissions;
+  if (Array.isArray(out.optional_permissions) && out.optional_permissions.length === 0) delete out.optional_permissions;
+
+  if (m.browser_action || m.page_action) {
+    out.action = {};
+    var droppedKeys = [];
+    if (isObj(m.browser_action)) {
+      Object.keys(m.browser_action).forEach(function (k) { out.action[k] = m.browser_action[k]; });
+    }
+    if (m.browser_action) log('Replaced "browser_action" with "action".', API);
+    if (isObj(m.page_action)) {
+      Object.keys(m.page_action).forEach(function (k) {
+        if (!(k in out.action)) out.action[k] = m.page_action[k];
+        else if (JSON.stringify(out.action[k]) !== JSON.stringify(m.page_action[k])) droppedKeys.push(k);
+      });
+    }
+    if (m.page_action) log('Replaced "page_action" with "action".', API);
+    if (droppedKeys.length > 0) {
+      log('Dropped the "page_action" value of ' + droppedKeys.map(function (k) { return '"' + k + '"'; }).join(", ") + ', because "browser_action" has a different value for the same key and "action" can hold one value per key. The converter kept the "browser_action" value.', API);
+    }
+    delete out.browser_action;
+    delete out.page_action;
+  }
+
+  if (m.background) {
+    var b = m.background;
+    if (Array.isArray(b.scripts) && b.scripts.length === 0) {
+      delete out.background;
+      log('Removed "background", because its "scripts" list is empty.', SW);
+    } else if (Array.isArray(b.scripts)) {
+      if (b.scripts.length === 1) {
+        out.background = { service_worker: b.scripts[0] };
+        log('Replaced "background.scripts" with "background.service_worker". The service_worker field takes a string, not an array.', SW);
+      } else {
+        out.background = { service_worker: b.scripts[0] };
+        log('Replaced "background.scripts" with "background.service_worker" using the first script, ' + JSON.stringify(b.scripts[0]) + ". A service worker is one string, so the other scripts are dropped. Merge them into one file yourself.", SW);
+        result.manual.push({ text: "Your manifest has " + b.scripts.length + ' background scripts. Manifest V3 allows one service worker. Combine them into a single file, because the service_worker field takes a single string.', url: SW });
+      }
+    } else if (typeof b.page === "string") {
+      out.background = { service_worker: "background.js" };
+      log('The background is an HTML page ("background.page"). A page cannot become a service_worker automatically. A placeholder "background.js" was written. Move the page logic there yourself.', SW);
+      result.manual.push({ text: 'Your manifest uses "background.page". Rewrite the page as a service worker module. The converter wrote a placeholder "background.js".', url: SW });
+    } else if (typeof b.service_worker === "string") {
+      out.background = { service_worker: b.service_worker };
+      if (b.type !== undefined) out.background.type = b.type;
+    }
+    if (b.persistent !== undefined) {
+      log('Removed "background.persistent", as the service worker migration page requires. Service workers are ephemeral and terminate when not in use.', SW);
+      if (out.background) { delete out.background.persistent; if (Object.keys(out.background).length === 0) delete out.background; }
+    }
+  }
+
+  if (Array.isArray(m.web_accessible_resources)) {
+    out.web_accessible_resources = m.web_accessible_resources.map(function (item) {
+      if (typeof item === "string") return { resources: [item], matches: ["*://*/*"] };
+      return item;
+    });
+    if (m.web_accessible_resources.some(function (i) { return typeof i === "string"; })) {
+      log('Converted the "web_accessible_resources" list of strings to objects with "resources" and "matches".', WAR);
+      result.war = 'For each converted string the converter wrote "matches" as ["*://*/*"], because in Manifest V2 the specified resources were accessible to all web sites by default. That pattern is not the same as <all_urls>. Narrow "matches" to the sites that need your resources. Each element must include a "resources" element and either a "matches" or "extension_ids" element.';
+    }
+  }
+
+  var cspOut = null;
+  if (typeof m.content_security_policy === "string") {
+    cspOut = { extension_pages: m.content_security_policy };
+    out.content_security_policy = cspOut;
+    log('Converted the "content_security_policy" string to an object with "extension_pages".', CSP);
+  } else if (m.content_security_policy && typeof m.content_security_policy === "object") {
+    cspOut = out.content_security_policy;
+  }
+  var badDirectives = [];
+  var allowed = ["'self'", "'none'", "'wasm-unsafe-eval'"];
+  if (cspOut && typeof cspOut.extension_pages === "string") {
+    var policy = cspOut.extension_pages;
+    ["script-src", "object-src", "worker-src"].forEach(function (dir) {
+      var dm = new RegExp(dir + "\\s+([^;]+)").exec(policy);
+      if (!dm) return;
+      var tokens = dm[1].trim().split(/\s+/).filter(function (t) { return allowed.indexOf(t) === -1 && t !== ";" && t !== ""; });
+      if (tokens.length > 0) {
+        badDirectives.push({ directive: dir, value: tokens.join(" ") });
+        var cleaned = dm[1].trim().split(/\s+/).filter(function (t) { return tokens.indexOf(t) === -1; }).join(" ");
+        var re = new RegExp("(" + dir + "\\s+)[^;]+");
+        cspOut.extension_pages = cspOut.extension_pages.replace(re, "$1" + (cleaned || "'self'"));
+        log('Removed "' + tokens.join(" ") + '" from "' + dir + '" in "content_security_policy". A packed Manifest V3 extension may only have \'self\', \'none\' and \'wasm-unsafe-eval\' in script-src, object-src and worker-src.', CSP);
+      }
+    });
+  }
+
+  ["permissions", "optional_permissions"].forEach(function (field) {
+    if (!(Array.isArray(m[field]) && m[field].indexOf("webRequestBlocking") !== -1)) return;
+    var list = Array.isArray(out[field]) ? out[field] : [];
+    var first = list.indexOf("webRequestBlocking");
+    var kept = list.filter(function (p) { return p !== "webRequestBlocking"; });
+    if (field === "permissions") {
+      if (kept.indexOf("declarativeNetRequest") === -1) {
+        kept.splice(first === -1 ? kept.length : first, 0, "declarativeNetRequest");
+        log('Found the "webRequestBlocking" permission. The converter replaced it with the "declarativeNetRequest" permission. Rewrite your blocking listeners as declarativeNetRequest rules.', BWR);
+      } else {
+        log('Removed the "webRequestBlocking" permission, because "declarativeNetRequest" is already in "permissions". Rewrite your blocking listeners as declarativeNetRequest rules.', BWR);
+      }
+      out.permissions = kept;
+    } else {
+      out.optional_permissions = kept;
+      if (kept.length === 0) delete out.optional_permissions;
+      if (!Array.isArray(out.permissions)) out.permissions = [];
+      if (out.permissions.indexOf("declarativeNetRequest") === -1) {
+        out.permissions.push("declarativeNetRequest");
+        log('Removed the optional "webRequestBlocking" permission and added the "declarativeNetRequest" permission. Rewrite your blocking listeners as declarativeNetRequest rules.', BWR);
+        log('Put "declarativeNetRequest" in "permissions", not in "optional_permissions", because it is one of the permissions that can not be specified as optional.', PERMS);
+      } else {
+        log('Removed the optional "webRequestBlocking" permission, because "declarativeNetRequest" is already in "permissions". Rewrite your blocking listeners as declarativeNetRequest rules.', BWR);
+      }
+    }
+  });
+  if (Array.isArray(out.permissions) && out.permissions.length === 0) delete out.permissions;
+
+  if (isObj(m.commands)) {
+    var oldNames = ["_execute_browser_action", "_execute_page_action"].filter(function (n) { return n in m.commands; });
+    if (oldNames.length > 0) {
+      if ("_execute_action" in m.commands) {
+        oldNames.forEach(function (n) {
+          delete out.commands[n];
+          log('Removed "' + n + '" from "commands", because "_execute_action" is already present.', CMD);
+        });
+      } else {
+        out.commands["_execute_action"] = m.commands[oldNames[0]];
+        oldNames.forEach(function (n) { delete out.commands[n]; });
+        log('Renamed "' + oldNames[0] + '" to "_execute_action" in "commands".', CMD);
+        if (oldNames.length > 1) {
+          log('Removed "' + oldNames[1] + '" from "commands". A manifest can hold one "_execute_action" key, so the converter kept the "' + oldNames[0] + '" entry.', CMD);
+        }
+      }
+    }
+  }
+
+  result.changes = changes;
+  result.manual = result.manual.concat([
+    { text: "Code that calls tabs.executeScript must move to scripting.executeScript in Manifest V3. The converter does not change code files.", url: API },
+    { text: "Blocking webRequest listeners that filter or modify requests must be rewritten as declarativeNetRequest rules. The converter does not change code files.", url: BWR }
+  ]);
+  result.csp = { policy: cspOut && typeof cspOut.extension_pages === "string" ? cspOut.extension_pages : null, present: !!cspOut, bad: badDirectives };
+  result.output = out;
+  return result;
+}
+
+function render(r) {
+  var errorbox = document.getElementById("errorbox");
+  var errortext = document.getElementById("errortext");
+  var result = document.getElementById("result");
+  var notice = document.getElementById("notice");
+  document.getElementById("changelog").innerHTML = "";
+  document.getElementById("manual").innerHTML = "";
+  document.getElementById("cspbox").innerHTML = "";
+  document.getElementById("warbox").innerHTML = "";
+  if (r.error) {
+    errortext.textContent = r.error;
+    errorbox.classList.remove("hidden");
+    result.classList.add("hidden");
+    return;
+  }
+  errorbox.classList.add("hidden");
+  result.classList.remove("hidden");
+  notice.textContent = r.notice || "";
+  notice.classList.toggle("hidden", !r.notice);
+  document.getElementById("output").textContent = JSON.stringify(r.output, null, 2);
+
+  var logUl = document.getElementById("changelog");
+  r.changes.forEach(function (c) {
+    var li = document.createElement("li");
+    if (c.url) {
+      var a = document.createElement("a");
+      a.href = c.url;
+      a.rel = "noopener";
+      a.textContent = c.text;
+      a.target = "_blank";
+      li.appendChild(a);
+    } else {
+      li.textContent = c.text;
+    }
+    logUl.appendChild(li);
+  });
+  if (r.changes.length === 0) {
+    var li0 = document.createElement("li");
+    li0.textContent = "No manifest changes were required.";
+    logUl.appendChild(li0);
+  }
+
+  var manUl = document.getElementById("manual");
+  r.manual.forEach(function (c) {
+    var li = document.createElement("li");
+    li.textContent = c.text;
+    manUl.appendChild(li);
+  });
+
+  var cspBox = document.getElementById("cspbox");
+  if (r.csp.policy == null) {
+    cspBox.innerHTML = r.csp.present ? '<p class="small">The content_security_policy has no extension_pages policy, so there is no extension page policy to check.</p>' : '<p class="small">No content_security_policy in the input. Manifest V3 does not require one.</p>';
+  } else if (r.csp.bad.length === 0) {
+    cspBox.innerHTML = '<p class="okline">The extension_pages policy passes. Its script-src, object-src and worker-src values are all values that Manifest V3 allows.</p>';
+  } else {
+    var html = "";
+    r.csp.bad.forEach(function (b) {
+      html += '<p class="warnline">Manifest V3 disallows "' + escapeHtml(b.value) + '" in ' + b.directive + ". The script-src, object-src and worker-src directives may only have 'self', 'none' and 'wasm-unsafe-eval' in a packed extension. The converted manifest above has these values removed.</p>";
+    });
+    html += '<p>Chrome shows an install error like this one for a value such as &#39;unsafe-eval&#39; in script-src.</p><pre>&#39;content_security_policy.extension_pages&#39;: Insecure CSP value &quot;&#39;unsafe-eval&#39;&quot; in directive &#39;script-src&#39;.</pre>';
+    html += '<p>Content security policy values for sandbox have no such new restrictions.</p>';
+    cspBox.innerHTML = html;
+  }
+
+  var warBox = document.getElementById("warbox");
+  warBox.innerHTML = r.war
+    ? '<p>' + escapeHtml(r.war) + "</p>"
+    : '<p class="small">No web_accessible_resources strings needed conversion in this input.</p>';
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function run() {
+  render(convertManifest(document.getElementById("input").value));
+}
+document.getElementById("convert").addEventListener("click", run);
+document.getElementById("input").addEventListener("keydown", function (e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") run();
+});
+document.getElementById("clear").addEventListener("click", function () {
+  document.getElementById("input").value = "";
+  document.getElementById("errorbox").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("input").focus();
+});
+window.addEventListener("pageshow", function (e) {
+  if (e.persisted) {
+    document.getElementById("errorbox").classList.add("hidden");
+    document.getElementById("result").classList.add("hidden");
+  }
+});
+</script>
+</body>
+</html>
